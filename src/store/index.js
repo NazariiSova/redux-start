@@ -7,15 +7,16 @@ const fakeData = [
     description: "some text about weather",
     id: 1,
   },
+
   {
-    title: "Post 2",
-    description: "some text about bicycle",
-    id: 2,
-  },
-  {
-    title: "Post 3",
+    title: "Rost 3",
     description: "some text about flowers",
     id: 3,
+  }, 
+   {
+    title: "Aost 2",
+    description: "some text about bicycle",
+    id: 2,
   },
 ];
 
@@ -35,3 +36,5 @@ const rootReducer = (state = initialState, action) => {
 const store = createStore(rootReducer);
 
 export default store;
+
+

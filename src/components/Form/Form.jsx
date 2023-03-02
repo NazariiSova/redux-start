@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setNewPost } from "../../store/actions";
+import { setNewPost, updatePosts } from "../../store/actions";
 
 import { useSelector } from "react-redux";
 import { getPostList } from "../../store/selectors";
-import { initialState } from "../../store";
 
 export const Form = () => {
   const dispatch = useDispatch();
@@ -17,31 +16,26 @@ export const Form = () => {
     const name = event.target.name;
 
     switch (name) {
-      case "title": {
-        return setTitle(value);
-      }
-      case "description": {
-        return setDescription(value);
-      }
+      case "title":
+        setTitle(value);
+        break;
+      case "description":
+        setDescription(value);
+        break;
       default:
-        return name;
     }
 
     // TODO: rewrite as switch case
-    // if (name === "title") {
-    //   setTitle(value);
-    // } else if (name === "description") {
-    //   setDescription(value);
-    // }
+    // done
   };
 
   const handlerSubmit = (event) => {
     // TODO: implement submit fuc with button 'Enter' without eventListeners
+    // done
 
-    if (
-      (title.length >= 1 && description.length >= 1) ||
-      (event.key === "Enter" && title.length >= 1 && description.length >= 1)
-    ) {
+    console.log(event.key);
+
+    if (title.length >= 1 && description.length >= 1) {
       event.preventDefault();
 
       const data = {
@@ -54,21 +48,27 @@ export const Form = () => {
     }
   };
 
-  const handlerSort = (state = initialState, action) => {
-    switch (action.type) {
-      case "SORT_OBJECT_BY_TITLE":
-        return {
-          ...state,
-          listOfPosts: [...state.listOfPosts].sort((a, b) =>
-            a.title.localeCompare(b.title)
-          ),
-        };
-      default:
-        return state;
-    }
-  };
+  // const handlerSort = (state = initialState, action) => {
+  // switch (action.type) {
+  //   case "SORT_OBJECT_BY_TITLE":
+  //     return {
+  //       ...state,
+  //       listOfPosts: [...state.listOfPosts].sort((a, b) =>
+  //         a.title.localeCompare(b.title)
+  //       ),
+  //     };
+  //   default:
+  //     return state;
+  // }
+  // };
 
-   
+  const handlerSort = () => {
+    listOfPosts.sort((a, b) => a.title.localeCompare(b.title));
+
+    const sortedPosts = [...listOfPosts];
+
+    dispatch(updatePosts(sortedPosts));
+  };
 
   // TODO: sort Posts by asc & desc
   // sort by  post title
@@ -99,6 +99,7 @@ export const Form = () => {
         className="button"
         onClick={handlerSubmit}
         onKeyDown={handlerSubmit}
+        type="submit"
       >
         Add new post
       </button>
